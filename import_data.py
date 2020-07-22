@@ -25,5 +25,5 @@ base['vencimento'] = pd.to_datetime(base['vencimento'], format ='%Y-%m-%d')
 
 base['vencimento'] = base['vencimento'].astype(str)
 
-base.to_json('data/bd_tesouro_app.json_' + str(datetime.datetime.now())[:10] ,orient = 'records')
+base.to_json('data/bd_tesouro_app_' + str(datetime.datetime.now())[:10] + '.json',orient = 'records')
 
