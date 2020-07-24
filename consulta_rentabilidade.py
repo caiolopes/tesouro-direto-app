@@ -2,16 +2,18 @@ import os
 
 import pandas as pd
 
-files = os.listdir(path="data")
-
 
 def rentabilidade_dia(titulo):
-    df = pd.read_json("data/" + files[0])
-    df["data_carga"] = files[0][15:25]
+    files = os.listdir(path="data")
 
-    for n in range(1, len(files)):
-        df_aux = pd.read_json("data/" + files[n])
-        df_aux["data_carga"] = files[n][15:25]
+    # from 15 to 15 is the date in the format YYYY-MM-DD
+    data_slice = slice(15, 25)
+
+    df = pd.DataFrame()
+
+    for filename in files:
+        df_aux = pd.read_json("data/" + filename)
+        df_aux["data_carga"] = filename[data_slice]
         df = pd.concat([df, df_aux])
 
     df["data_carga"] = pd.to_datetime(df["data_carga"])
