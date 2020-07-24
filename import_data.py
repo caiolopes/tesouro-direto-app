@@ -4,6 +4,8 @@ import pandas as pd
 
 import datetime
 
+import os
+
 response = requests.get('https://www.tesourodireto.com.br/json/br/com/b3/tesourodireto/service/api/treasurybondsinfo.json', verify=False)
 
 base = response.json()
@@ -24,6 +26,13 @@ base.rename(columns = {'nm' : 'titulo','anulInvstmtRate' : 'rentabilidade_anual_
 base['vencimento'] = pd.to_datetime(base['vencimento'], format ='%Y-%m-%d')
 
 base['vencimento'] = base['vencimento'].astype(str)
+
+while os.path.exists('/data') == False:
+
+        makedirs("/data ")
+
+        if os.path.exists('/data') == True:
+            break
 
 base.to_json('data/bd_tesouro_app_' + str(datetime.datetime.now())[:10] + '.json',orient = 'records')
 
